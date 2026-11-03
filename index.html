@@ -16,11 +16,7 @@
 <meta name="twitter:card" content="summary_large_image">
 <link rel="icon" href="favicon.jpg" type="image/jpeg">
 <link rel="apple-touch-icon" href="img/apple-touch-icon.jpg">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
 <link href="https://fonts.googleapis.com/css2?family=Roboto+Condensed:wght@400;700&family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="css/styles.css">
-<script src="js/main.js" defer=""></script>
 <script type="application/ld+json">
 {
  "@context": "https://schema.org",
@@ -98,72 +94,164 @@
 }
 </script>
 <style>
-    /* Khung chung cho cả 4 nút */
-    .zalo-float, .call-float, .tiktok-float, .facebook-float {
-        position: fixed;
-        left: 15px;
-        z-index: 9999;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        background-color: #ffd700;
-        border-radius: 50%;
-        width: 50px;
-        height: 50px;
-        padding: 0;
-        text-decoration: none;
-        box-shadow: 0 4px 12px rgba(0,0,0,0.25);
-        transition: transform 0.3s ease, box-shadow 0.3s ease;
-        cursor: pointer;
-        box-sizing: border-box;
-    }
+/* ==========================================================================
+   RESET & CẤU HÌNH CHUNG (PHONG CÁCH CÔNG NGHIỆP THỰC DỤNG - MÀU LOGO APK)
+   ========================================================================== */
+:root {
+  /* Bảng màu lấy từ Logo APK */
+  --primary: #1a1a1a;        /* Đen xám than (Header, Footer, Nền tối) */
+  --secondary: #333333;      /* Xám đậm */
+  --accent: #c99c0a;         /* Vàng Gold (từ chữ APK) - Nút, Hotline, Điểm nhấn */
+  --accent-hover: #a8810a;   /* Vàng Gold sẫm khi hover */
+  
+  --text-main: #444444;
+  --text-light: #666666;
+  --bg-light: #f4f4f4;
+  --bg-white: #ffffff;
+  --border: #dddddd;
+  
+  --font-main: "Roboto", Arial, sans-serif;
+  --font-head: "Roboto Condensed", Arial, sans-serif;
+  --container: 1180px;
+}
 
-    .zalo-float:hover, .call-float:hover, .tiktok-float:hover, .facebook-float:hover {
-        transform: scale(1.1);
-        box-shadow: 0 6px 20px rgba(0,0,0,0.35);
-    }
+*, *::before, *::after { box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+body { margin: 0; font: 400 16px/1.7 var(--font-main); color: var(--text-main); background: var(--bg-white); }
+img { max-width: 100%; height: auto; display: block; }
+a { color: var(--accent); text-decoration: none; transition: color 0.2s; }
+a:hover { color: var(--accent-hover); }
+h1, h2, h3 { font-family: var(--font-head); color: var(--primary); line-height: 1.3; margin: 0 0 15px; font-weight: 700; }
+h1 { font-size: 2.5rem; text-transform: uppercase; }
+h2 { font-size: 1.8rem; text-transform: uppercase; border-bottom: 2px solid var(--accent); padding-bottom: 10px; display: inline-block; margin-bottom: 30px; }
+h3 { font-size: 1.25rem; color: var(--primary); margin-top: 20px; }
+p { margin: 0 0 15px; }
+strong { color: var(--primary); font-weight: 700; }
 
-    /* Vị trí bottom xếp chồng lên nhau (cách nhau 10px) */
-    .zalo-float { bottom: 20px; }
-    .call-float { bottom: 80px; }
-    .tiktok-float { bottom: 140px; }
-    .facebook-float { bottom: 200px; }
+.container { width: 100%; max-width: var(--container); margin: 0 auto; padding: 0 15px; }
+.section { padding: 60px 0; border-bottom: 1px solid var(--border); }
+.section--light { background: var(--bg-light); }
+.section--dark { background: var(--primary); color: #cccccc; }
+.section--dark h2, .section--dark h3, .section--dark strong { color: #ffffff; }
+.section--dark h2 { border-bottom-color: #555; }
+.section--dark a { color: var(--accent); text-decoration: underline; }
+.section--dark a:hover { color: #ffffff; }
 
-    /* Khung icon */
-    .zalo-float__icon, .call-float__icon, .tiktok-float__icon, .facebook-float__icon {
-        width: 100%;
-        height: 100%;
-        border-radius: 50%;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        overflow: hidden;
-    }
+/* Nút bấm vuông vức - Màu vàng, chữ đen */
+.btn { display: inline-block; padding: 12px 24px; font-family: var(--font-head); font-weight: 700; font-size: 1rem; text-transform: uppercase; text-decoration: none; border-radius: 0; transition: background 0.2s; cursor: pointer; border: none; }
+.btn--accent { background: var(--accent); color: var(--primary); }
+.btn--accent:hover { background: var(--accent-hover); color: var(--primary); text-decoration: none; }
 
-    /* Ẩn phần text trên mobile */
-    .zalo-float__phone, .call-float__phone, .tiktok-float__phone, .facebook-float__phone {
-        display: none;
-    }
+/* Grid Layout */
+.grid { display: grid; gap: 30px; }
+.grid-2 { grid-template-columns: 1fr; }
+@media (min-width: 850px) {
+  .grid-2 { grid-template-columns: 1fr 1fr; align-items: start; }
+}
 
-    /* Responsive cho mobile: Giữ nguyên nút tròn nhỏ gọn */
-    @media (max-width: 768px) {
-        .zalo-float, .call-float, .tiktok-float, .facebook-float {
-            left: 10px;
-            width: 44px;
-            height: 44px;
-        }
-        .zalo-float { bottom: 20px; }
-        .call-float { bottom: 74px; }
-        .tiktok-float { bottom: 128px; }
-        .facebook-float { bottom: 182px; }
-    }
+/* Header */
+.site-header { position: sticky; top: 0; z-index: 1000; background: #ffffff; border-bottom: 3px solid var(--accent); }
+.site-header__inner { display: flex; align-items: center; justify-content: space-between; min-height: 80px; flex-wrap: wrap; gap: 15px; }
+.brand img { height: 50px; width: auto; }
+.primary-nav ul { display: flex; flex-wrap: wrap; gap: 20px; list-style: none; margin: 0; padding: 0; }
+.primary-nav a { color: var(--primary); font-family: var(--font-head); font-size: 0.95rem; font-weight: 700; text-transform: uppercase; }
+.primary-nav a:hover { color: var(--accent); text-decoration: none; }
+.header-phone { color: var(--accent); font-family: var(--font-head); font-weight: 700; font-size: 1.2rem; white-space: nowrap; }
+.nav-toggle { display: none; background: none; border: none; cursor: pointer; padding: 10px; }
+
+/* Hero */
+.hero { position: relative; background: var(--primary); color: #ffffff; padding: 100px 0; text-align: left; border-bottom: 5px solid var(--accent); }
+.hero__bg { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; opacity: 0.3; }
+.hero__inner { position: relative; z-index: 1; max-width: 800px; }
+.hero h1 { color: #ffffff; margin-bottom: 20px; }
+.kicker { display: inline-block; background: var(--accent); color: var(--primary); padding: 5px 10px; font-family: var(--font-head); font-weight: 700; font-size: 0.9rem; text-transform: uppercase; margin-bottom: 15px; }
+.hero__lead { font-size: 1.2rem; margin-bottom: 30px; color: #eeeeee; }
+
+/* Định dạng danh sách */
+.facts dt { font-family: var(--font-head); font-weight: 700; color: var(--primary); font-size: 1.1rem; margin-top: 20px; margin-bottom: 5px; }
+.facts dd { margin-left: 0; margin-bottom: 15px; color: var(--text-main); }
+.bullets, .steps { padding-left: 20px; margin-bottom: 20px; }
+.bullets li, .steps li { margin-bottom: 10px; }
+
+/* Dịch vụ */
+.services { list-style: none; padding: 0; margin: 0; display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 20px; }
+.services figure { margin: 0; background: #ffffff; border: 1px solid var(--border); }
+.services img { width: 100%; height: 200px; object-fit: cover; border-bottom: 1px solid var(--border); }
+.services figcaption { padding: 15px; font-family: var(--font-head); font-weight: 700; text-align: center; color: var(--primary); text-transform: uppercase; }
+
+/* Sản phẩm */
+.cards { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 20px; }
+.card { background: #ffffff; border: 1px solid var(--border); text-align: center; }
+.card img { width: 100%; height: 200px; object-fit: contain; padding: 15px; border-bottom: 1px solid #eee; }
+.card__body { padding: 15px; }
+.card__body h3 { font-size: 1rem; margin: 0; color: var(--primary); }
+
+/* Tin tức */
+.posts { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 20px; }
+.post { background: #ffffff; border: 1px solid var(--border); }
+.post img { width: 100%; height: 200px; object-fit: cover; }
+.post h3 { font-size: 1.05rem; padding: 15px 15px 5px; margin: 0; }
+.post p { padding: 0 15px 15px; margin: 0; font-size: 0.95rem; color: var(--text-light); }
+
+/* FAQ */
+.faq details { border: 1px solid var(--border); margin-bottom: 10px; background: #ffffff; }
+.faq summary { padding: 15px; cursor: pointer; font-family: var(--font-head); font-weight: 700; color: var(--primary); background: #f9f9f9; }
+.faq summary h3 { display: inline; margin: 0; font-size: 1.05rem; }
+.faq details[open] summary { border-bottom: 1px solid var(--border); }
+.faq p { padding: 15px; margin: 0; }
+
+/* Form liên hệ */
+.contact-grid { display: grid; grid-template-columns: 1fr; gap: 40px; }
+@media (min-width: 850px) {
+  .contact-grid { grid-template-columns: 1fr 1fr; }
+}
+.contact-form { background: #ffffff; padding: 30px; border: 1px solid var(--border); }
+.contact-form h3 { margin-top: 0; color: var(--primary); border-bottom: 2px solid var(--accent); padding-bottom: 10px; margin-bottom: 20px; }
+.form-group { margin-bottom: 15px; }
+.form-group label { display: block; font-weight: 700; margin-bottom: 5px; color: var(--primary); font-size: 0.95rem; }
+.form-group input, .form-group textarea, .form-group select { width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 0; font-family: var(--font-main); font-size: 1rem; }
+.form-group input:focus, .form-group textarea:focus, .form-group select:focus { outline: 2px solid var(--accent); border-color: transparent; }
+.form-group textarea { height: 100px; resize: vertical; }
+
+/* Footer */
+.site-footer { background: #111111; color: #999999; padding: 30px 0; font-size: 0.9rem; }
+.site-footer__inner { display: flex; justify-content: space-between; flex-wrap: wrap; gap: 20px; }
+.site-footer__links { display: flex; gap: 20px; list-style: none; padding: 0; margin: 0; }
+.site-footer a { color: #999999; text-decoration: none; }
+.site-footer a:hover { color: var(--accent); }
+
+/* Nút liên hệ nổi */
+.floating-actions { position: fixed; left: 20px; bottom: 20px; display: flex; flex-direction: column; gap: 10px; z-index: 9999; }
+.float-btn { width: 50px; height: 50px; border-radius: 50%; display: flex; align-items: center; justify-content: center; box-shadow: 0 2px 5px rgba(0,0,0,0.3); background: #ffffff; border: 1px solid #ddd; transition: transform 0.2s; }
+.float-btn:hover { transform: scale(1.1); }
+.float-btn img { width: 100%; height: 100%; object-fit: cover; border-radius: 50%; }
+
+/* Responsive Mobile */
+@media (max-width: 1199px) {
+  .nav-toggle { display: block; }
+  .primary-nav { display: none; width: 100%; order: 4; border-top: 1px solid #eee; padding-top: 15px; margin-top: 10px; }
+  .primary-nav.is-open { display: block; }
+  .primary-nav ul { flex-direction: column; gap: 10px; }
+  .header-phone { margin-left: auto; }
+}
+@media (max-width: 768px) {
+  .site-header__inner { min-height: 70px; }
+  .brand img { height: 40px; }
+  .hero { padding: 60px 0; }
+  .hero h1 { font-size: 1.8rem; }
+  .section { padding: 40px 0; }
+  .floating-actions { left: 10px; bottom: 10px; }
+  .float-btn { width: 45px; height: 45px; }
+}
 </style>
 </head>
 <body>
+
+<!-- HEADER -->
 <header class="site-header">
   <div class="container site-header__inner">
-    <a class="brand" href="#trang-chu"><img src="img/logo-apk.webp" alt="APK machines – logo Công Ty TNHH Thương Mại APK Việt Nam" width="1112" height="799"></a>
-    <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="primary-nav"><span class="sr-only">Mở menu</span><span class="nav-toggle__bar"></span></button>
+    <a class="brand" href="#trang-chu"><img src="img/logo-apk.webp" alt="APK machines – logo Công Ty TNHH Thương Mại APK Việt Nam"></a>
+    <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="primary-nav"><span style="font-size: 1.5rem; color: var(--primary);">☰</span></button>
     <nav id="primary-nav" class="primary-nav" aria-label="Điều hướng chính">
       <ul>
         <li><a href="#trang-chu">Trang chủ</a></li>
@@ -184,29 +272,32 @@
 </header>
 
 <main>
+  <!-- HERO -->
   <section id="trang-chu" class="hero">
-    <img class="hero__bg" src="img/su-dung-may-de-keo-giay.jpg" alt="Cuộn giấy thành phẩm trên giá đỡ ở cuối dây chuyền máy xeo giấy trong nhà xưởng" width="1600" height="1200" fetchpriority="high">
+    <img class="hero__bg" src="img/su-dung-may-de-keo-giay.jpg" alt="Cuộn giấy thành phẩm trên giá đỡ ở cuối dây chuyền máy xeo giấy trong nhà xưởng">
     <div class="container hero__inner">
-      <p class="kicker">Công Ty TNHH Thương Mại APK Việt Nam</p>
+      <span class="kicker">Công Ty TNHH Thương Mại APK Việt Nam</span>
       <h1>Thiết Bị Máy Xeo Giấy APK</h1>
       <p class="hero__lead">Chuyên cung cấp – sửa chữa – bảo dưỡng máy xeo giấy</p>
       <a class="btn btn--accent" href="tel:+84838342218">Gọi 0838 342 218</a>
     </div>
   </section>
 
+  <!-- GIỚI THIỆU -->
   <section id="gioi-thieu" class="section">
     <div class="container">
       <h2 class="section-title">Giới thiệu công ty APK Việt Nam</h2>
-      <div class="about grid">
-        <figure class="about__media">
-          <img src="img/may-xeo-giay-cong-nghiep-pm4.webp" alt="Dây chuyền máy xeo giấy công nghiệp Black Clawson đặt trong nhà xưởng" width="700" height="283" loading="lazy">
+      <div class="grid grid-2">
+        <figure style="margin: 0;">
+          <img src="img/may-xeo-giay-cong-nghiep-pm4.webp" alt="Dây chuyền máy xeo giấy công nghiệp Black Clawson đặt trong nhà xưởng" style="border: 1px solid #ddd; padding: 5px;">
         </figure>
-        <div class="about__text">
+        <div>
           <p>Công Ty TNHH Thương Mại APK Việt Nam đã và đang dần chuyển mình trở thành một trong những doanh nghiệp dẫn đầu trong lĩnh vực thiết bị máy xeo giấy tại Việt Nam, Trung Quốc, Đài Loan… cùng rất nhiều quốc gia khác. Với sự cam kết về chất lượng và dịch vụ, tập thể APK đã xây dựng được giá trị niềm tin, sự tín nhiệm từ rất khách hàng và quý đối tác. Không chỉ dừng lại ở việc cung cấp, lặt đặt phụ tùng, linh kiện, máy sản xuất và các sản phẩm, mặt hàng giấy từ phân khúc trung bình đến cao cấp tới thị trường, mà chúng tôi còn nỗ lực phục vụ khách hàng bằng cách luôn đề cao dịch vụ hậu mãi tận tâm. Chữ “ tín “ chính là khởi nguồn sự phát triển của tập thể APK, APK luôn mong muốn có thể nhận được nụ cười và cái bắt tay của khách hàng và đối tác trước khi đi đến ký kết hợp đồng &amp; bàn giao.</p>
           <p>Sản phẩm của APK được sản xuất với công nghệ tiên tiến mới nhất tại Trung Quốc – một trong những quốc gia dẫn đầu trong việc sản xuất và cung cấp các loại máy xeo giấy hiện đại với nhiều ưu điểm nổi bật, vì vậy chúng tôi luôn tự tin khẳng định, sản phẩm của APK luôn đảm bảo chất lượng từ những chi tiết nhỏ nhất.</p>
         </div>
       </div>
-      <h3>Dây chuyền máy xeo giấy chuyên nghiệp</h3>
+
+      <h3 style="margin-top: 40px;">Dây chuyền máy xeo giấy chuyên nghiệp</h3>
       <dl class="facts">
         <dt>Công nghệ hiện đại</dt>
         <dd>Xưởng sản xuất được trang bị công nghệ tiên tiến, giúp tối ưu hóa quy trình sản xuất và nâng cao chất lượng sản phẩm. Các hệ thống điều khiển tự động, cảm biến và phần mềm quản lý hiện đại giúp kiểm soát chặt chẽ quá trình sản xuất.</dd>
@@ -226,43 +317,44 @@
     </div>
   </section>
 
-  <section id="dich-vu" class="section section--services">
+  <!-- DỊCH VỤ -->
+  <section id="dich-vu" class="section section--light">
     <div class="container">
       <h2 class="section-title">Dịch vụ nổi bật</h2>
-      <ul class="services grid">
+      <ul class="services">
         <li>
           <figure>
-            <img src="img/sua-chua-may-moc.webp" alt="Hai kỹ thuật viên đội mũ bảo hộ thao tác trên dây chuyền máy trong nhà xưởng" width="447" height="298" loading="lazy">
+            <img src="img/sua-chua-may-moc.webp" alt="Hai kỹ thuật viên đội mũ bảo hộ thao tác trên dây chuyền máy trong nhà xưởng">
             <figcaption>Sửa chữa máy móc</figcaption>
           </figure>
         </li>
         <li>
           <figure>
-            <img src="img/phu-kien-chinh-hang-apk.jpg" alt="Mô hình dây chuyền máy nghiền thủy lực và băng tải nguyên liệu giấy phế liệu" width="456" height="323" loading="lazy">
+            <img src="img/phu-kien-chinh-hang-apk.jpg" alt="Mô hình dây chuyền máy nghiền thủy lực và băng tải nguyên liệu giấy phế liệu">
             <figcaption>Phụ tùng chính hãng</figcaption>
           </figure>
         </li>
         <li>
           <figure>
-            <img src="img/tu-van-ky-thuat.jpg" alt="Kỹ sư hướng dẫn đấu nối biến tần và tủ điều khiển trên bàn kỹ thuật" width="484" height="273" loading="lazy">
+            <img src="img/tu-van-ky-thuat.jpg" alt="Kỹ sư hướng dẫn đấu nối biến tần và tủ điều khiển trên bàn kỹ thuật">
             <figcaption>Tư vấn kỹ thuật</figcaption>
           </figure>
         </li>
         <li>
           <figure>
-            <img src="img/ve-sinh-bao-duong.webp" alt="Hai công nhân mặc áo phản quang kiểm tra cụm bơm và đường ống trong nhà máy" width="436" height="290" loading="lazy">
+            <img src="img/ve-sinh-bao-duong.webp" alt="Hai công nhân mặc áo phản quang kiểm tra cụm bơm và đường ống trong nhà máy">
             <figcaption>Vệ sinh bảo dưỡng</figcaption>
           </figure>
         </li>
         <li>
           <figure>
-            <img src="img/bao-duong-dinh-ky.webp" alt="Kỹ thuật viên thao tác trên bảng điều khiển của máy xeo giấy đang vận hành" width="488" height="327" loading="lazy">
+            <img src="img/bao-duong-dinh-ky.webp" alt="Kỹ thuật viên thao tác trên bảng điều khiển của máy xeo giấy đang vận hành">
             <figcaption>Bảo dưỡng định kỳ</figcaption>
           </figure>
         </li>
         <li>
           <figure>
-            <img src="img/lap-dat-may-xeo.webp" alt="Máy xeo giấy nhiều lô sấy vừa lắp đặt xong trong xưởng sản xuất" width="411" height="309" loading="lazy">
+            <img src="img/lap-dat-may-xeo.webp" alt="Máy xeo giấy nhiều lô sấy vừa lắp đặt xong trong xưởng sản xuất">
             <figcaption>Lắp đặt máy xeo</figcaption>
           </figure>
         </li>
@@ -270,10 +362,12 @@
     </div>
   </section>
 
+  <!-- LẮP ĐẶT -->
   <section id="lap-dat-may-xeo-giay" class="section">
     <div class="container">
       <h2 class="section-title">Lắp đặt máy xeo giấy</h2>
       <p>Lắp đặt máy xeo giấy không chỉ là một quy trình kỹ thuật mà còn là bước đầu tiên quan trọng để đảm bảo sản xuất ra những sản phẩm giấy chất lượng cao. Công ty APK Việt Nam, với nhiều năm kinh nghiệm trong lĩnh vực này, đã trở thành một trong những đơn vị hàng đầu cung cấp giải pháp lắp đặt máy xeo giấy.</p>
+      
       <h3>Quy trình lắp đặt máy xeo giấy</h3>
       <dl class="facts">
         <dt>Chuẩn bị địa điểm lắp đặt</dt>
@@ -283,6 +377,7 @@
         <dt>Kiểm tra và nghiệm thu</dt>
         <dd>Kiểm tra có thể bao gồm các hoạt động như chạy thử máy, kiểm tra độ ổn định của giấy trong quá trình xeo, và đánh giá các chỉ số kỹ thuật khác. Một bản báo cáo nghiệm thu cũng cần được lập để ghi nhận toàn bộ quá trình lắp đặt và kết quả kiểm tra.</dd>
       </dl>
+
       <h3>Các loại máy xeo giấy phổ biến</h3>
       <dl class="facts">
         <dt>Máy xeo giấy đơn lớp</dt>
@@ -292,6 +387,7 @@
         <dt>Máy xeo giấy tự động</dt>
         <dd>Máy xeo giấy tự động không chỉ giảm thiểu sức lao động mà còn tăng cường độ chính xác trong từng công đoạn. Hệ thống điều khiển tự động giúp giám sát quá trình sản xuất, từ đó phát hiện và xử lý nhanh chóng các sự cố có thể xảy ra.</dd>
       </dl>
+
       <h3>Lợi ích khi hợp tác với công ty APK Việt Nam</h3>
       <dl class="facts">
         <dt>Kinh nghiệm lâu năm trong ngành</dt>
@@ -301,6 +397,7 @@
         <dt>Tư vấn giải pháp tối ưu</dt>
         <dd>Chúng tôi sẽ phân tích nhu cầu cụ thể của từng doanh nghiệp và đưa ra những đề xuất phù hợp nhất. Bằng cách tối ưu hóa quy trình sản xuất, chúng tôi giúp khách hàng tiết kiệm chi phí và nâng cao năng suất.</dd>
       </dl>
+
       <div class="faq">
         <details>
           <summary><h3>Lắp đặt máy xeo giấy mất bao lâu?</h3></summary>
@@ -322,19 +419,21 @@
     </div>
   </section>
 
+  <!-- PHỤ KIỆN -->
   <section id="phu-kien-chinh-hang" class="section section--light">
     <div class="container">
       <h2 class="section-title">Phụ kiện chính hãng</h2>
-      <div class="about grid">
-        <figure class="about__media">
-          <img src="img/may-xeo-giay-tissue.jpg" alt="Máy xeo giấy tissue với lô sấy Yankee lớn trong dây chuyền sản xuất" width="720" height="496" loading="lazy">
-        </figure>
-        <div class="about__text">
+      <div class="grid grid-2">
+        <div>
           <p>Trong lĩnh vực sản xuất và chế biến giấy, việc duy trì hoạt động hiệu quả của các máy móc là điều vô cùng quan trọng. Những chiếc máy xeo giấy không chỉ đơn thuần là những thiết bị cơ học mà còn là hệ thống phức tạp với nhiều bộ phận cần được chăm sóc đúng cách. Đặc biệt, việc sử dụng phụ kiện chính hãng cho máy xeo giấy có thể quyết định đến độ bền và hiệu suất làm việc của máy.</p>
           <p>Trong bất kỳ ngành công nghiệp nào, việc sử dụng phụ kiện chính hãng không chỉ đảm bảo tính ổn định cho máy móc mà còn kéo dài tuổi thọ của thiết bị. Đối với ngành giấy, nơi độ chính xác và hiệu suất là yếu tố hàng đầu, sử dụng các linh kiện kém chất lượng có thể dẫn đến những hậu quả nghiêm trọng như hỏng hóc, gián đoạn sản xuất hoặc thậm chí là thiệt hại tài chính nghiêm trọng.</p>
         </div>
+        <figure style="margin: 0;">
+          <img src="img/may-xeo-giay-tissue.jpg" alt="Máy xeo giấy tissue với lô sấy Yankee lớn trong dây chuyền sản xuất" style="border: 1px solid #ddd; padding: 5px;">
+        </figure>
       </div>
-      <h3>Các loại phụ kiện chính hãng cho máy xeo giấy</h3>
+
+      <h3 style="margin-top: 30px;">Các loại phụ kiện chính hãng cho máy xeo giấy</h3>
       <dl class="facts">
         <dt>Bạc đạn (Vòng bi)</dt>
         <dd>Chúng đóng vai trò chính trong việc giảm ma sát giữa các bộ phận chuyển động, giúp cho máy hoạt động êm ái và hiệu quả hơn. Các bạc đạn này thường được sản xuất từ các vật liệu chất lượng cao, giúp giảm thiểu nguy cơ hỏng hóc và kéo dài tuổi thọ của máy.</dd>
@@ -347,6 +446,7 @@
         <dt>Dây đai (Dây Curoa)</dt>
         <dd>Dây đai là một trong những bộ phận chủ chốt trong hệ thống truyền động của máy xeo giấy. Vai trò của nó là truyền động từ động cơ đến các bộ phận khác. Một dây đai chất lượng sẽ giúp giảm thiểu áp lực lên động cơ và kéo dài tuổi thọ cho máy xeo giấy.</dd>
       </dl>
+
       <h3>Cách đảm bảo mua được phụ kiện chính hãng</h3>
       <ul class="bullets">
         <li><strong>Mua từ nhà cung cấp uy tín:</strong> điều đầu tiên và quan trọng nhất là bạn nên chọn các đại lý, nhà phân phối chính thức của hãng sản xuất máy xeo giấy.</li>
@@ -357,10 +457,12 @@
     </div>
   </section>
 
+  <!-- TƯ VẤN KỸ THUẬT -->
   <section id="tu-van-ky-thuat" class="section">
     <div class="container">
       <h2 class="section-title">Tư vấn kỹ thuật</h2>
       <p>Dịch vụ tư vấn kỹ thuật cho máy xeo giấy là một yếu tố quan trọng trong việc đảm bảo hiệu quả sản xuất và chất lượng sản phẩm. Dưới đây là thông tin chi tiết về dịch vụ này, bao gồm các công việc cụ thể, lợi ích, quy trình của APK.</p>
+      
       <h3>Các công việc trong dịch vụ tư vấn kỹ thuật</h3>
       <ul class="bullets">
         <li><strong>Đánh giá hiệu suất:</strong> Phân tích hiệu suất hiện tại của máy xeo giấy và xác định các điểm yếu cần cải thiện.</li>
@@ -374,6 +476,7 @@
         <li><strong>Phản ứng nhanh:</strong> Cung cấp dịch vụ hỗ trợ kỹ thuật khẩn cấp để xử lý các sự cố không mong muốn.</li>
         <li><strong>Tư vấn giải pháp khắc phục:</strong> Đưa ra các giải pháp cụ thể để khắc phục các sự cố kỹ thuật và ngăn ngừa tái diễn.</li>
       </ul>
+
       <h3>Quy trình tư vấn kỹ thuật của APK</h3>
       <ol class="steps">
         <li><strong>Liên hệ và yêu cầu tư vấn:</strong> Gửi yêu cầu tư vấn kỹ thuật và cung cấp thông tin chi tiết về máy xeo giấy.</li>
@@ -387,14 +490,12 @@
     </div>
   </section>
 
+  <!-- MUA BÁN GIẤY -->
   <section id="mua-ban-giay" class="section section--light">
     <div class="container">
       <h2 class="section-title">Mua – bán giấy</h2>
-      <div class="about grid">
-        <figure class="about__media">
-          <img src="img/lo-hoi-may-xeo-giay.jpg" alt="Lò hơi công nghiệp cấp nhiệt cho hệ thống sấy của máy xeo giấy" width="720" height="960" loading="lazy">
-        </figure>
-        <div class="about__text">
+      <div class="grid grid-2">
+        <div>
           <h3>Quy trình sản xuất và các loại giấy</h3>
           <ul class="bullets">
             <li><strong>Chuẩn bị bột giấy:</strong> Nguyên liệu chính là bột gỗ hoặc bột giấy tái chế. Bột giấy được nghiền nhỏ và xử lý để loại bỏ tạp chất.</li>
@@ -406,123 +507,135 @@
             <li><strong>Giấy đặc biệt:</strong> Giấy mỹ thuật, giấy ảnh, giấy kỹ thuật số.</li>
           </ul>
         </div>
+        <div>
+          <h3>Yếu tố ảnh hưởng đến giá cả</h3>
+          <ul class="bullets">
+            <li><strong>Nguyên liệu:</strong> Giá bột giấy, gỗ, và các nguyên liệu tái chế ảnh hưởng trực tiếp đến giá giấy.</li>
+            <li><strong>Năng lượng:</strong> Chi phí năng lượng (điện, nước, khí đốt) trong quá trình sản xuất.</li>
+            <li><strong>Công nghệ:</strong> Sự hiện đại và hiệu quả của công nghệ sản xuất giấy.</li>
+            <li><strong>Nhu cầu thị trường:</strong> Nhu cầu sử dụng giấy trong các ngành công nghiệp và tiêu dùng cuối cùng.</li>
+            <li><strong>Chính sách thuế và thương mại:</strong> Các quy định thuế và chính sách thương mại quốc tế.</li>
+          </ul>
+          <h3>Các bước mua bán giấy</h3>
+          <dl class="facts">
+            <dt>Đối với người mua</dt>
+            <dd>Xác định loại giấy cần mua, số lượng và chất lượng yêu cầu; liên hệ hotline của APK để lấy báo giá và thông tin sản phẩm; đàm phán giá cả, điều kiện giao hàng, và đặt hàng; kiểm tra chất lượng và số lượng hàng hóa khi nhận.</dd>
+            <dt>Đối với người bán</dt>
+            <dd>Liên hệ với bộ phận thu mua/ hotline của APK; cung cấp thông tin sản phẩm, báo giá, và thương lượng các điều kiện giao dịch; xác nhận đơn hàng, sắp xếp sản xuất và giao hàng.</dd>
+          </dl>
+        </div>
       </div>
-      <h3>Yếu tố ảnh hưởng đến giá cả</h3>
-      <ul class="bullets">
-        <li><strong>Nguyên liệu:</strong> Giá bột giấy, gỗ, và các nguyên liệu tái chế ảnh hưởng trực tiếp đến giá giấy.</li>
-        <li><strong>Năng lượng:</strong> Chi phí năng lượng (điện, nước, khí đốt) trong quá trình sản xuất.</li>
-        <li><strong>Công nghệ:</strong> Sự hiện đại và hiệu quả của công nghệ sản xuất giấy.</li>
-        <li><strong>Nhu cầu thị trường:</strong> Nhu cầu sử dụng giấy trong các ngành công nghiệp và tiêu dùng cuối cùng.</li>
-        <li><strong>Chính sách thuế và thương mại:</strong> Các quy định thuế và chính sách thương mại quốc tế.</li>
-      </ul>
-      <h3>Các bước mua bán giấy</h3>
-      <dl class="facts">
-        <dt>Đối với người mua</dt>
-        <dd>Xác định loại giấy cần mua, số lượng và chất lượng yêu cầu; liên hệ hotline của APK để lấy báo giá và thông tin sản phẩm; đàm phán giá cả, điều kiện giao hàng, và đặt hàng; kiểm tra chất lượng và số lượng hàng hóa khi nhận.</dd>
-        <dt>Đối với người bán</dt>
-        <dd>Liên hệ với bộ phận thu mua/ hotline của APK; cung cấp thông tin sản phẩm, báo giá, và thương lượng các điều kiện giao dịch; xác nhận đơn hàng, sắp xếp sản xuất và giao hàng.</dd>
-      </dl>
     </div>
   </section>
 
+  <!-- SẢN PHẨM -->
   <section id="san-pham" class="section">
     <div class="container">
       <h2 class="section-title">Sản phẩm</h2>
-      <p class="section-lead">Máy xeo giấy và phụ kiện máy xeo giấy do APK Việt Nam cung cấp. Giá sản phẩm: vui lòng gọi hotline.</p>
-      <div class="cards grid">
+      <p style="text-align: center; margin-bottom: 30px;">Máy xeo giấy và phụ kiện máy xeo giấy do APK Việt Nam cung cấp. Giá sản phẩm: vui lòng gọi hotline.</p>
+      
+      <div class="cards">
         <article class="card">
-          <img src="img/may-nghien-bot-trong-quay-he-zg.webp" alt="Máy nghiền bột trống quay hệ ZG dùng trong khâu chuẩn bị bột giấy" width="900" height="347" loading="lazy">
+          <img src="img/may-nghien-bot-trong-quay-he-zg.webp" alt="Máy nghiền bột trống quay hệ ZG dùng trong khâu chuẩn bị bột giấy">
           <div class="card__body"><h3>Máy nghiền bột trống quay hệ ZG</h3></div>
         </article>
         <article class="card">
-          <img src="img/gau-ngoam.webp" alt="Gầu ngoặm bốc dỡ nguyên liệu giấy phế liệu" width="900" height="550" loading="lazy">
+          <img src="img/gau-ngoam.webp" alt="Gầu ngoặm bốc dỡ nguyên liệu giấy phế liệu">
           <div class="card__body"><h3>Gầu ngoặm</h3></div>
         </article>
         <article class="card">
-          <img src="img/may-cat-day.webp" alt="Máy cắt dây phần bột của dây chuyền máy sản xuất giấy" width="900" height="569" loading="lazy">
+          <img src="img/may-cat-day.webp" alt="Máy cắt dây phần bột của dây chuyền máy sản xuất giấy">
           <div class="card__body"><h3>Máy Cắt Dây – Phần Bột Máy Sản Xuất Giấy</h3></div>
         </article>
         <article class="card">
-          <img src="img/may-toi-day.webp" alt="Máy tời dây dùng kèm máy xeo giấy" width="900" height="559" loading="lazy">
+          <img src="img/may-toi-day.webp" alt="Máy tời dây dùng kèm máy xeo giấy">
           <div class="card__body"><h3>Máy Tời Dây – Phụ Kiện Máy Xeo Giấy</h3></div>
         </article>
         <article class="card">
-          <img src="img/sang-tron-he-zst.webp" alt="Sàng tròn hệ ZST lọc bột giấy trong dây chuyền xeo" width="900" height="496" loading="lazy">
+          <img src="img/sang-tron-he-zst.webp" alt="Sàng tròn hệ ZST lọc bột giấy trong dây chuyền xeo">
           <div class="card__body"><h3>Sàng tròn hệ ZST</h3></div>
         </article>
         <article class="card">
-          <img src="img/may-sang-tho-he-cxj.webp" alt="Máy sàng thô hệ CXJ tách tạp chất khỏi dòng bột giấy" width="900" height="519" loading="lazy">
+          <img src="img/may-sang-tho-he-cxj.webp" alt="Máy sàng thô hệ CXJ tách tạp chất khỏi dòng bột giấy">
           <div class="card__body"><h3>Máy sàng thô hệ CXJ</h3></div>
         </article>
         <article class="card">
-          <img src="img/may-tach-rac-dong-zsf.webp" alt="Máy tách rác hệ ZSF loại bỏ rác thô trong bột giấy tái chế" width="900" height="495" loading="lazy">
+          <img src="img/may-tach-rac-dong-zsf.webp" alt="Máy tách rác hệ ZSF loại bỏ rác thô trong bột giấy tái chế">
           <div class="card__body"><h3>Máy tách rác hệ ZSF</h3></div>
         </article>
         <article class="card">
-          <img src="img/may-nghien-bot-giay-hong-he-szs.webp" alt="Máy nghiền bột giấy hỏng hệ SZS thu hồi giấy lỗi trong sản xuất" width="900" height="491" loading="lazy">
+          <img src="img/may-nghien-bot-giay-hong-he-szs.webp" alt="Máy nghiền bột giấy hỏng hệ SZS thu hồi giấy lỗi trong sản xuất">
           <div class="card__body"><h3>Máy nghiền bột giấy hỏng hệ SZS</h3></div>
         </article>
       </div>
     </div>
   </section>
 
+  <!-- BẢO HÀNH -->
   <section id="bao-hanh" class="section section--light">
     <div class="container">
       <h2 class="section-title">Bảo hành</h2>
-      <ul class="bullets">
-        <li>Đối với nhóm dịch vụ: Các dịch vụ khách hàng mua &amp; sử dụng của APK sẽ được bảo hành theo tiêu chuẩn của công ty.</li>
-        <li>Đối với nhóm phụ kiện: Các sản phẩm phụ kiện lắp đặt, phụ tùng thay thế tại APK sẽ được bảo hành theo tiêu chuẩn của hãng.</li>
-      </ul>
-      <h3>Các trường hợp không được bảo hành</h3>
-      <ul class="bullets">
-        <li>Các hao mòn hay vỡ, hỏng, sự xuống cấp và tai nạn/ thiên tai.</li>
-        <li>Các hao mòn và vỡ, hỏng các chi tiết, các hạng mục bảo dưỡng thông thường.</li>
-        <li>Hư hỏng do các yếu tố bên ngoài như tai nạn giao thông, ô nhiễm hoá học, mưa axit, mưa đá, cát, muối, hoả hoạn hay thiên tai.</li>
-        <li>Sự xuống cấp hay hư hỏng bình thường của các chi tiết tráng mạ, bề mặt sơn, chi tiết cao su, vật liệu phủ bọc.</li>
-        <li>Sử dụng, bảo dưỡng không đúng cách hoặc sửa đổi.</li>
-        <li>Hư hỏng do bảo dưỡng không đầy đủ, không đúng hướng dẫn sử dụng.</li>
-        <li>Hư hỏng do chở quá tải.</li>
-        <li>Hư hỏng do vận hành không đúng cách, sử dụng sai cách trong những điều kiện bất thường.</li>
-      </ul>
-      <h3>Điều kiện để đổi trả sản phẩm của APK</h3>
-      <p>Đối với sản phẩm phụ kiện, trong thời gian 5 ngày kể từ ngày nhận hàng, lắp đặt nếu sản phẩm bị trục trặc do lỗi kỹ thuật của nhà sản xuất, Quý khách được đổi lại sản phẩm mà không tốn bất kỳ khoản chi phí nào.</p>
-      <ul class="bullets">
-        <li>Phát hiện hàng giả, hàng nhái, không chuẩn hãng.</li>
-        <li>Lỗi do nhà sản xuất (1 đổi 1).</li>
-        <li>Lỗi do kĩ thuật lắp đặt.</li>
-      </ul>
-      <h3>Trường hợp không được đổi trả, hoàn hàng</h3>
-      <ul class="bullets">
-        <li>Sản phẩm hư không phải lỗi do nhà sản xuất.</li>
-        <li>Sản phẩm bị tháo dở hoăc bung ra ( không phải nhân viên APK làm ).</li>
-        <li>Sản phẩm bị hư hỏng do tác động cơ học làm rơi, vỡ, va đập, trầy xước, móp méo, ẩm ướt, hoen rỉ, chảy nước hoặc do hỏa hoạn, thiên tai gây nên.</li>
-        <li>Sản phẩm có dấu hiệu hư hỏng do chuột bọ hoặc côn trùng xâm nhập.</li>
-        <li>Sử dụng không đúng hướng dẫn sử dụng.</li>
-      </ul>
+      <div class="grid grid-2">
+        <div>
+          <ul class="bullets">
+            <li>Đối với nhóm dịch vụ: Các dịch vụ khách hàng mua &amp; sử dụng của APK sẽ được bảo hành theo tiêu chuẩn của công ty.</li>
+            <li>Đối với nhóm phụ kiện: Các sản phẩm phụ kiện lắp đặt, phụ tùng thay thế tại APK sẽ được bảo hành theo tiêu chuẩn của hãng.</li>
+          </ul>
+          <h3>Điều kiện để đổi trả sản phẩm của APK</h3>
+          <p>Đối với sản phẩm phụ kiện, trong thời gian 5 ngày kể từ ngày nhận hàng, lắp đặt nếu sản phẩm bị trục trặc do lỗi kỹ thuật của nhà sản xuất, Quý khách được đổi lại sản phẩm mà không tốn bất kỳ khoản chi phí nào.</p>
+          <ul class="bullets">
+            <li>Phát hiện hàng giả, hàng nhái, không chuẩn hãng.</li>
+            <li>Lỗi do nhà sản xuất (1 đổi 1).</li>
+            <li>Lỗi do kĩ thuật lắp đặt.</li>
+          </ul>
+        </div>
+        <div>
+          <h3>Các trường hợp không được bảo hành</h3>
+          <ul class="bullets">
+            <li>Các hao mòn hay vỡ, hỏng, sự xuống cấp và tai nạn/ thiên tai.</li>
+            <li>Các hao mòn và vỡ, hỏng các chi tiết, các hạng mục bảo dưỡng thông thường.</li>
+            <li>Hư hỏng do các yếu tố bên ngoài như tai nạn giao thông, ô nhiễm hoá học, mưa axit, mưa đá, cát, muối, hoả hoạn hay thiên tai.</li>
+            <li>Sự xuống cấp hay hư hỏng bình thường của các chi tiết tráng mạ, bề mặt sơn, chi tiết cao su, vật liệu phủ bọc.</li>
+            <li>Sử dụng, bảo dưỡng không đúng cách hoặc sửa đổi.</li>
+            <li>Hư hỏng do bảo dưỡng không đầy đủ, không đúng hướng dẫn sử dụng.</li>
+            <li>Hư hỏng do chở quá tải.</li>
+            <li>Hư hỏng do vận hành không đúng cách, sử dụng sai cách trong những điều kiện bất thường.</li>
+          </ul>
+          <h3>Trường hợp không được đổi trả, hoàn hàng</h3>
+          <ul class="bullets">
+            <li>Sản phẩm hư không phải lỗi do nhà sản xuất.</li>
+            <li>Sản phẩm bị tháo dở hoăc bung ra ( không phải nhân viên APK làm ).</li>
+            <li>Sản phẩm bị hư hỏng do tác động cơ học làm rơi, vỡ, va đập, trầy xước, móp méo, ẩm ướt, hoen rỉ, chảy nước hoặc do hỏa hoạn, thiên tai gây nên.</li>
+            <li>Sản phẩm có dấu hiệu hư hỏng do chuột bọ hoặc côn trùng xâm nhập.</li>
+            <li>Sử dụng không đúng hướng dẫn sử dụng.</li>
+          </ul>
+        </div>
+      </div>
     </div>
   </section>
 
+  <!-- TIN TỨC -->
   <section id="tin-tuc" class="section">
     <div class="container">
       <h2 class="section-title">Tin tức</h2>
-      <div class="posts grid">
+      <div class="posts">
         <article class="post">
-          <img src="img/tin-cong-nghe-xeo-giay-hien-dai.webp" alt="Dây chuyền xeo giấy ứng dụng công nghệ điều khiển hiện đại" width="900" height="600" loading="lazy">
+          <img src="img/tin-cong-nghe-xeo-giay-hien-dai.webp" alt="Dây chuyền xeo giấy ứng dụng công nghệ điều khiển hiện đại">
           <h3>Công nghệ xeo giấy hiện đại: Tương lai của ngành công nghiệp giấy</h3>
           <p>Ngành công nghiệp giấy đã trải qua những bước tiến vượt bậc nhờ vào sự…</p>
         </article>
         <article class="post">
-          <img src="img/tin-thiet-bi-nganh-giay.webp" alt="Thiết bị ngành giấy lắp đặt trong nhà máy sản xuất" width="900" height="600" loading="lazy">
+          <img src="img/tin-thiet-bi-nganh-giay.webp" alt="Thiết bị ngành giấy lắp đặt trong nhà máy sản xuất">
           <h3>Thiết Bị Ngành Giấy: Giải Pháp Công Nghệ Hiện Đại Cho Ngành Sản Xuất Giấy</h3>
           <p>Ngành công nghiệp giấy đang chứng kiến sự chuyển mình mạnh mẽ nhờ vào việc…</p>
         </article>
         <article class="post">
-          <img src="img/tin-may-ep-le.webp" alt="Máy ép lề dùng để ép kiện giấy phế liệu" width="720" height="540" loading="lazy">
+          <img src="img/tin-may-ep-le.webp" alt="Máy ép lề dùng để ép kiện giấy phế liệu">
           <h3>Quy Trình Hoạt Động Chi Tiết Của Máy Ép Lề (Máy Ép Giấy Phế Liệu)</h3>
           <p>Máy ép lề (máy ép giấy phế liệu) là thiết bị quan trọng trong ngành…</p>
         </article>
         <article class="post">
-          <img src="img/tin-thiet-bi-may-xeo-giay-tai-binh-duong.webp" alt="Thiết bị máy xeo giấy lắp đặt tại nhà máy ở Bình Dương" width="720" height="555" loading="lazy">
+          <img src="img/tin-thiet-bi-may-xeo-giay-tai-binh-duong.webp" alt="Thiết bị máy xeo giấy lắp đặt tại nhà máy ở Bình Dương">
           <h3>Thiết bị máy xeo giấy tại Bình Dương</h3>
           <p>Thiết bị máy xeo giấy tại Bình Dương đang trở thành một yếu tố then…</p>
         </article>
@@ -530,23 +643,62 @@
     </div>
   </section>
 
-  <section id="lien-he" class="section section--dark section--contact">
-    <div class="container contact grid">
-      <div>
-        <h2 class="section-title section-title--left">Liên hệ với chúng tôi</h2>
-        <p>Liên hệ với chúng tôi để nhận tư vấn miễn phí về thiết bị máy xeo giấy, phụ kiện chính hãng và dịch vụ lắp đặt, sửa chữa, bảo dưỡng.</p>
-        <a class="btn btn--accent" href="tel:+84838342218">Gọi 0838 342 218</a>
+  <!-- LIÊN HỆ & FORM ĐỂ LẠI THÔNG TIN -->
+  <section id="lien-he" class="section section--dark" style="padding-bottom: 80px;">
+    <div class="container">
+      <h2 class="section-title" style="color: #fff; border-bottom-color: #555;">Liên hệ với chúng tôi</h2>
+      
+      <div class="contact-grid">
+        <!-- Thông tin liên hệ -->
+        <div class="contact-info">
+          <p>Liên hệ với chúng tôi để nhận tư vấn miễn phí về thiết bị máy xeo giấy, phụ kiện chính hãng và dịch vụ lắp đặt, sửa chữa, bảo dưỡng.</p>
+          <p><strong>Công ty:</strong> CÔNG TY TNHH THƯƠNG MẠI APK VIỆT NAM</p>
+          <p><strong>Địa chỉ:</strong> Tổ Dân Phố Lũng Giang, Phường Tiên Du, Thành Phố Bắc Ninh, Việt Nam</p>
+          <p><strong>Hotline:</strong> <a href="tel:+84838342218">0838 342 218</a></p>
+          <p><strong>Email:</strong> <a href="mailto:congtyapk@gmail.com">congtyapk@gmail.com</a></p>
+          <br>
+          <a class="btn btn--accent" href="tel:+84838342218">Gọi Ngay 0838 342 218</a>
+        </div>
+
+        <!-- Form điền thông tin -->
+        <div class="contact-form">
+          <h3>ĐỂ LẠI THÔNG TIN NHẬN BÁO GIÁ</h3>
+          <form action="#" method="POST">
+            <div class="form-group">
+              <label for="fullname">Họ và tên (*)</label>
+              <input type="text" id="fullname" name="fullname" required placeholder="Nhập họ tên của bạn">
+            </div>
+            <div class="form-group">
+              <label for="phone">Số điện thoại (*)</label>
+              <input type="tel" id="phone" name="phone" required placeholder="Nhập số điện thoại">
+            </div>
+            <div class="form-group">
+              <label for="email">Email</label>
+              <input type="email" id="email" name="email" placeholder="Nhập email (nếu có)">
+            </div>
+            <div class="form-group">
+              <label for="need">Nhu cầu của bạn</label>
+              <select id="need" name="need">
+                <option value="Mua máy mới">Mua máy xeo giấy mới</option>
+                <option value="Mua phụ tùng">Mua phụ tùng, linh kiện</option>
+                <option value="Sửa chữa">Cần sửa chữa, bảo dưỡng</option>
+                <option value="Tư vấn">Cần tư vấn kỹ thuật</option>
+                <option value="Khác">Nhu cầu khác</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label for="message">Nội dung chi tiết</label>
+              <textarea id="message" name="message" placeholder="Mô tả chi tiết yêu cầu của bạn..."></textarea>
+            </div>
+            <button type="submit" class="btn btn--accent" style="width: 100%;">GỬI YÊU CẦU</button>
+          </form>
+        </div>
       </div>
-      <address class="contact__info">
-        <p><strong>Công ty:</strong> CÔNG TY TNHH THƯƠNG MẠI APK VIỆT NAM</p>
-        <p><strong>Địa chỉ:</strong> Tổ Dân Phố Lũng Giang, Phường Tiên Du, Thành Phố Bắc Ninh, Việt Nam</p>
-        <p><strong>Hotline:</strong> <a href="tel:+84838342218">0838 342 218</a></p>
-        <p><strong>Email:</strong> <a href="mailto:congtyapk@gmail.com">congtyapk@gmail.com</a></p>
-      </address>
     </div>
   </section>
 </main>
 
+<!-- FOOTER -->
 <footer class="site-footer">
   <div class="container site-footer__inner">
     <p>© 2026 Bản quyền thuộc về APK VIỆT NAM.</p>
@@ -560,33 +712,47 @@
   </div>
 </footer>
 
-<a href="https://zalo.me/0838342218" class="zalo-float" target="_blank" rel="noopener noreferrer" aria-label="Chat Zalo">
-    <span class="zalo-float__icon">
-        <img src="img/icon-zalo.png" alt="Zalo" style="width: 100%; height: 100%; object-fit: cover; border-radius: 50%;">
-    </span>
-    <span class="zalo-float__phone">0847 266 662</span>
-</a>
+<!-- NÚT LIÊN HỆ NỔI -->
+<div class="floating-actions">
+  <a href="https://zalo.me/0838342218" class="float-btn" target="_blank" rel="noopener noreferrer" aria-label="Chat Zalo">
+    <img src="img/icon-zalo.png" alt="Zalo">
+  </a>
+  <a href="tel:+84838342218" class="float-btn" aria-label="Gọi điện thoại">
+    <img src="img/calltell.jpg" alt="Call">
+  </a>
+  <a href="https://www.tiktok.com/@congtyapkcom" class="float-btn" target="_blank" rel="noopener noreferrer" aria-label="TikTok">
+    <img src="img/tiktok-icon.png" alt="TikTok">
+  </a>
+  <a href="https://www.facebook.com/congtyapkcom/" class="float-btn" target="_blank" rel="noopener noreferrer" aria-label="Facebook">
+    <img src="img/iconfb.png" alt="Facebook">
+  </a>
+</div>
 
-<a href="tel:+84838342218" class="call-float" aria-label="Gọi điện thoại">
-    <span class="call-float__icon">
-        <img src="img/calltell.jpg" alt="Call" style="width: 100%; height: 100%; object-fit: cover; border-radius: 50%;">
-    </span>
-    <span class="call-float__phone">0838 342 218</span>
-</a>
+<!-- SCRIPT XỬ LÝ MENU MOBILE -->
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+    var toggle = document.querySelector('.nav-toggle');
+    var nav = document.getElementById('primary-nav');
+    
+    if (toggle && nav) {
+      toggle.addEventListener('click', function() {
+        var isOpen = nav.classList.contains('is-open');
+        nav.classList.toggle('is-open');
+        toggle.setAttribute('aria-expanded', !isOpen);
+        toggle.innerHTML = isOpen ? '<span style="font-size: 1.5rem; color: var(--primary);">☰</span>' : '<span style="font-size: 1.5rem; color: var(--primary);">✕</span>';
+      });
 
-<a href="https://www.tiktok.com/@congtyapkcom" class="tiktok-float" target="_blank" rel="noopener noreferrer" aria-label="TikTok">
-    <span class="tiktok-float__icon">
-        <img src="img/tiktok-icon.png" alt="TikTok" style="width: 100%; height: 100%; object-fit: cover; border-radius: 50%;">
-    </span>
-    <span class="tiktok-float__phone">TikTok</span>
-</a>
-
-<a href="https://www.facebook.com/congtyapkcom/" class="facebook-float" target="_blank" rel="noopener noreferrer" aria-label="Facebook">
-    <span class="facebook-float__icon">
-        <img src="img/iconfb.png" alt="Facebook" style="width: 100%; height: 100%; object-fit: cover; border-radius: 50%;">
-    </span>
-    <span class="facebook-float__phone">Facebook</span>
-</a>
+      // Đóng menu khi click vào link
+      nav.addEventListener('click', function(e) {
+        if (e.target.tagName === 'A') {
+          nav.classList.remove('is-open');
+          toggle.setAttribute('aria-expanded', 'false');
+          toggle.innerHTML = '<span style="font-size: 1.5rem; color: var(--primary);">☰</span>';
+        }
+      });
+    }
+  });
+</script>
 
 </body>
 </html>
